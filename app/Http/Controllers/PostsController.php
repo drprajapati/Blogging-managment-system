@@ -34,7 +34,11 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        return view('admin.post.create');
+        $this->validate($request,[
+           'title'=>'required',
+           'featured'=>'required|image',
+           'content'=>'required'
+        ]);
     }
 
     /**
