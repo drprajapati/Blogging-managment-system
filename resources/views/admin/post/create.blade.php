@@ -2,15 +2,7 @@
 
 @section('content')
     {{--Gives the error when the given data is validated --}}
-    @if(count($errors) > 0)
-        <ul class="list-group">
-            @foreach($errors->all() as $error)
-                <li class="list-group-item text-danger">
-                    {{$error}}
-                </li>
-            @endforeach
-        </ul>
-    @endif
+    {{--@include('error.error')--}}
 <div class="panel panel-default">
     <div class="panel-heading">
         Create a new Post
@@ -20,12 +12,12 @@
             {{csrf_field()}}
             <div class="form-group">
                 <label for="title">Title</label>
-                <input type="text" name = "title" class = "form-contrl">
+                <input type="text" name = "title" class = "form-control">
             </div>
 
             <div class="form-group">
                 <label for="featrued">Featured Image</label>
-                <input type="text" name = "featured" class = "form-contrl">
+                <input type="file" name = "featured" class = "form-control">
             </div>
 
             <div class="form-group">

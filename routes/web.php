@@ -17,18 +17,46 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
 
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
-Route::group(['prefix'=> 'admin','middleware'=>'auth'],function(){
+    Route::get('/home', [
+        'uses' => 'HomeController@index',
+        'as' => 'home'
+    ]);
+    Route::get('/category',[
+        'uses'=>'CategoryController@index',
+        'as'=>'category'
+    ]);
+    Route::get('/category/create', [
+        'uses' => 'CategoryController@create',
+        'as' => 'category.create'
+    ]);
 
-    Route::get('/posts/create',[
-        'uses'=> 'PostsController@create',
+    Route::get('/category/delete/{id}', [
+        'uses' => 'CategoryController@destroy',
+        'as' => 'category.delete'
+    ]);
+
+    Route::get('/category/edit/{id}', [
+        'uses' => 'CategoryController@edit',
+        'as' => 'category.edit'
+    ]);
+    Route::post('/category/store', [
+        'uses' => 'CategoryController@store',
+        'as' => 'category.store'
+    ]);
+    Route::post('/category/update/{id}',[
+        'uses'=>'CategoryController@update',
+        'as'=>'category.update'
+    ]);
+    Route::get('/posts/create', [
+        'uses' => 'PostsController@create',
         'as' => 'posts.create'
     ]);
 
-    Route::Post('/posts/store',[
-        'uses'=> 'PostsController@store',
+    Route::Post('/posts/store', [
+        'uses' => 'PostsController@store',
         'as' => 'posts.store'
     ]);
 });
