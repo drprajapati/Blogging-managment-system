@@ -14,7 +14,7 @@
                 @foreach($posts as $post)
                     <tr>
                         <td>
-                            Image
+                            <img src="{{$post->featured}}" alt="{{$post->title}}" width="80px" height="80px">
                         </td>
                         <td>
                             {{$post->title}}
