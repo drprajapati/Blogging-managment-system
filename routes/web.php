@@ -24,6 +24,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         'uses' => 'HomeController@index',
         'as' => 'home'
     ]);
+
+
+    //Routes of CategoryController for CRUD
     Route::get('/category',[
         'uses'=>'CategoryController@index',
         'as'=>'category'
@@ -50,13 +53,22 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         'uses'=>'CategoryController@update',
         'as'=>'category.update'
     ]);
+
+
+    //Routes for PostsController CRUD
     Route::get('/posts/create', [
         'uses' => 'PostsController@create',
         'as' => 'posts.create'
     ]);
 
-    Route::Post('/posts/store', [
+    Route::post('/posts/store', [
         'uses' => 'PostsController@store',
-        'as' => 'posts.store'
+        'as' => 'post.store'
     ]);
+
+    Route::get('/post',[
+        'uses'=>'PostsController@index',
+        'as'=>'posts'
+    ]);
+
 });

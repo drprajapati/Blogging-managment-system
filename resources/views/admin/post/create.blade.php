@@ -2,13 +2,13 @@
 
 @section('content')
     {{--Gives the error when the given data is validated --}}
-    {{--@include('error.error')--}}
+   @include('error.error')
 <div class="panel panel-default">
     <div class="panel-heading">
-        Create a new Post
+        <h2>Create a new Post</h2>
     </div>
     <div class="panel-body">
-        <form action="{{route('posts.store')}}" method = "post">
+        <form action="{{ route('post.store') }}" method = 'post' enctype="multipart/form-data">
             {{csrf_field()}}
             <div class="form-group">
                 <label for="title">Title</label>
@@ -16,17 +16,27 @@
             </div>
 
             <div class="form-group">
-                <label for="featrued">Featured Image</label>
-                <input type="file" name = "featured" class = "form-control">
+                <label for="category">Select Category</label>
+                <select name="category_id" id="category" class="from-control">
+                    @foreach($categories  as $category)
+                        <option value="{{$category->id}}">{{$category->name}}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="form-group">
-                <label for="content">Contenet</label>
-                <textarea name="content" id="" cols="5" rows="5" class = "form-control"></textarea>
+                <label for="featured">Featured Image</label>
+                <input type="file" name = "featured" class = "form-control" >
             </div>
 
             <div class="form-group">
-                <button class="btn btn-success">Share Post</button>
+                <label for="contents">Content</label>
+                <textarea  name="contents" cols="5" rows="5" class="form-control"
+                       placeholder="Enter your content here"></textarea>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-success" type = "submit">Share Post</button>
             </div>
         </form>
 
