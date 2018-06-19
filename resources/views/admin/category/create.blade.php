@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <form action="{{route('category.store')}}" method ='post'>
+            <form action="{{route('tags.store')}}" method ='post'>
                 {{csrf_field()}}
                 <div class="col-lg-12">
                     <div class="form-group">
