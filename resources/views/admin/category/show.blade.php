@@ -10,6 +10,7 @@
                 <th>Update</th>
                 </thead>
                 <tbody>
+                @if('$categories->count()'>0)
                 @foreach($categories as $category)
                     <tr>
                         <td>
@@ -23,6 +24,12 @@
                         </td>
                     </tr>
                 @endforeach
+
+                @else
+                    <tr>
+                        <td>No Categories are yet</td>
+                    </tr>
+                @endif
                 </tbody>
             </table>
         </div>

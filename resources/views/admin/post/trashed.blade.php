@@ -7,11 +7,10 @@
                 <thead>
                 <th>Image</th>
                 <th>Title</th>
-                <th>Trash</th>
-                <th>Edit</th>
+                <th>Restore</th>
+                <th>Delete</th>
                 </thead>
                 <tbody>
-                @if('$posts->count()'>0)
                 @foreach($posts as $post)
                     <tr>
                         <td>
@@ -21,19 +20,13 @@
                             {{$post->title}}
                         </td>
                         <td>
-                            <a href="{{route('posts.delete',['id'=>$post->id])}}" class="btn btn-xs btn-danger">Trash</a>
+                            <a href="{{route('posts.restore',['id'=>$post->id])}}" class="btn btn-xs btn-success">Restore</a>
                         </td>
                         <td>
-                            <a href="{{route('posts.edit',['id'=>$post->id])}}" class="btn btn-xs btn-info">Edit</a>
+                            <a href="{{route('posts.kill',['id'=>$post->id])}}" class="btn btn-xs btn-danger">Delete</a>
                         </td>
                     </tr>
                 @endforeach
-
-                @else
-                    <tr>
-                        <td>No Posts are yet</td>
-                    </tr>
-                @endif
                 </tbody>
             </table>
         </div>

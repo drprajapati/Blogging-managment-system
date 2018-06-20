@@ -7,6 +7,7 @@ use Session;
 use App\Category;
 use App\Post;
 use Illuminate\Http\Request;
+
 class PostsController extends Controller
 {
     /**
@@ -16,7 +17,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        return view('admin.post.index')->with('posts',Post::all());
+        return view('admin.post.index')->with('posts', Post::all());
     }
 
     /**
@@ -28,8 +29,8 @@ class PostsController extends Controller
     {
         $categories = Category::all();
 
-        if($categories->count() == 0){
-            Session::flash('info','You must have at least one category');
+        if ($categories->count() == 0) {
+            Session::flash('info', 'You must have at least one category');
             return redirect()->back();
         }
         return view('admin.post.create')->with('categories', Category::all());
@@ -51,7 +52,7 @@ class PostsController extends Controller
         ]);
 
         $featured = $request->featured;
-        $featured_new_name = time().$featured->getClientOriginalName();
+        $featured_new_name = time() . $featured->getClientOriginalName();
         $featured->move('uploads/posts', $featured_new_name);
 
         $post = Post::create([
@@ -59,7 +60,7 @@ class PostsController extends Controller
             'category_id' => $request->category_id,
             'featured' => 'uploads/posts/' . $featured_new_name,
             'contents' => $request->contents,
-            'slug'=>str_slug($request->title)
+            'slug' => str_slug($request->title)
         ]);
 //        $post = new Post();
 //        $post->title = $request->title;
@@ -68,7 +69,7 @@ class PostsController extends Controller
 //        $post->content = $request->contents;
 //        $post->save();
 //
-        Session::flash('success','Post Created Successfully');
+        Session::flash('success', 'Post Created Successfully');
         return redirect()->back();
     }
 
@@ -91,7 +92,8 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $posts = Post::find($id);
+        return view('admin.post.edit')->with('posts', $posts)->with('categories', Category::all());
     }
 
     /**
@@ -103,7 +105,30 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'title' =>'required',
+            'category_id' => 'required',
+            'contents' => 'required'
+        ]);
+        $post = Post::find($id);
+        if ($request->hasFile('featured')) {
+            $featured = $request->featured;
+            $featured_new_name = time() . $featured->getClientOriginalName();
+            $featured->move('uploads/posts', $featured_new_name);
+
+            $post->featured = 'uploads/posts/' . $featured_new_name;
+        }
+
+        $post->title = $request->title;
+        $post->contents = $request->contents;
+        $post->category_id = $request->category_id;
+
+        $post->save();
+
+        Session::flash('success', 'Post successfully updated');
+
+        return redirect()->route('posts');
+
     }
 
     /**
@@ -114,6 +139,32 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+
+        $post->delete();
+        Session::flash('success', 'Post is successfully trashed');
+        return redirect()->back();
+    }
+
+    public function trashed()
+    {
+        $posts = Post::onlyTrashed()->get();
+        return view('admin.post.trashed')->with('posts', $posts);
+    }
+
+    public function kill($id)
+    {
+        $posts = Post::withTrashed()->where('id', $id)->first();
+        $posts->forceDelete();
+        Session::flash('success', 'Posts is permanently deleted');
+        return redirect()->back();
+    }
+
+    public function restore($id)
+    {
+        $posts = Post::withTrashed()->where('id', $id)->first();
+        $posts->restore();
+        Session::flash('success', 'Post is restored successfully');
+        return redirect()->route('posts');
     }
 }
