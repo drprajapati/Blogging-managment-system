@@ -11,7 +11,7 @@
                 <th>Edit</th>
                 </thead>
                 <tbody>
-                @if('$posts->count()'>0)
+                @if($posts->count()>0)
                 @foreach($posts as $post)
                     <tr>
                         <td>

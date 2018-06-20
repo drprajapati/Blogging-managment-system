@@ -23,7 +23,14 @@
                     @endforeach
                 </select>
             </div>
-
+            <div class="form-group">
+                <label for="tag">Select a tag</label>
+                @foreach($tags as $tag)
+                    <div class="checkbox">
+                        <label><input type="checkbox" name = "tags[]" value="{{$tag->id}}">{{$tag->tag}}</label>
+                    </div>
+                @endforeach
+            </div>
             <div class="form-group">
                 <label for="featured">Featured Image</label>
                 <input type="file" name = "featured" class = "form-control" >

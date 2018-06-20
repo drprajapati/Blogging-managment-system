@@ -10,7 +10,7 @@
                 <th>Update</th>
                 </thead>
                 <tbody>
-                @if('$categories->count()'>0)
+                @if($categories->count()>0)
                 @foreach($categories as $category)
                     <tr>
                         <td>
