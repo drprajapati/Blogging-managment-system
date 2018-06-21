@@ -93,6 +93,9 @@
                         <li class="list-group-item"><a href="{{route('tags.create')}}">Create new Tag</a></li>
                         <li class="list-group-item"><a href="{{route('posts.create')}}">Create a Post</a></li>
                         <li class="list-group-item"><a href="{{route('posts.trashed')}}">Trashed Post</a></li>
+                        @if(Auth::user()->admin)
+                            <li class="list-group-item"><a href="{{route('setting')}}">Settings</a></li>
+                        @endif
                         <li class="list-group-item"><a href="#">Contact Us</a></li>
                         <li class="list-group-item"><a href="/#">About Us</a></li>
                     </ul>
