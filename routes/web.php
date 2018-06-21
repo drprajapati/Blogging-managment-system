@@ -128,4 +128,44 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         'uses'=>'TagsController@store',
         'as'=>'tags.store'
     ]);
+
+    //Routes for the users controller
+
+    Route::get('/users',[
+        'uses'=>'UsersController@index',
+        'as'=>'users'
+    ]);
+
+    Route::get('/users/create',[
+        'uses'=>'UsersController@create',
+        'as'=>'users.create'
+    ]);
+    Route::post('/users/store',[
+        'uses'=>'UsersController@store',
+        'as'=>'users.store'
+    ]);
+
+    Route::get('/user/admin/{id}',[
+        'uses'=>'UsersController@admin',
+        'as'=>'users.admin'
+    ]);
+    Route::get('/user/not_admin/{id}',[
+        'uses'=>'UsersController@not_admin',
+        'as'=>'users.not_admin'
+    ]);
+
+    Route::get('user/delete/{id}',[
+        'uses'=>'UsersController@destroy',
+        'as'=>'users.delete'
+    ]);
+    Route::get('/user/profile',[
+        'uses'=>'ProfilesController@index',
+        'as'=>'user.profile'
+    ]);
+
+
+    Route::post('/user/profile/update',[
+        'uses'=>'ProfilesController@update',
+        'as'=>'user.profile.update'
+    ]);
 });
