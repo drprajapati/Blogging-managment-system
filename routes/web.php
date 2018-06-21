@@ -11,9 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [
+    'uses'=>'FrontEndController@index',
+    'as' =>'index'
+]);
 
 Auth::routes();
 
@@ -176,5 +177,15 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::post('/setting/update',[
         'uses'=>'SettingsController@update',
         'as'=>'setting.update'
+    ]);
+
+    Route::get('/post/{slug}',[
+        'uses'=>'FrontEndController@singlePost',
+        'as'=>'post.single'
+    ]);
+
+    Route::get('/category/{id}',[
+        'use'=>'FrontEndController@category',
+        'as'=>'category.single'
     ]);
 });
